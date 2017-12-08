@@ -47,35 +47,35 @@
         },
 		
         "spoke1RGName": {
-            "defaultValue": "VDC-Spoke1",
+            "defaultValue": "VDC-Production",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 1 resource group"
             }
         },
 		 "spoke2RGName": {
-            "defaultValue": "VDC-Spoke2",
+            "defaultValue": "VDC-Development",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 2 resource group"
             }
         },
 		 "spoke3RGName": {
-            "defaultValue": "VDC-Spoke3",
+            "defaultValue": "VDC-Management1",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 3 resource group"
             }
         },
 		 "spoke4RGName": {
-            "defaultValue": "VDC-Spoke4",
+            "defaultValue": "VDC-Management2",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 4 resource group"
             }
         },
         "spoke5RGName": {
-            "defaultValue": "VDC-Spoke5",
+            "defaultValue": "Gateway",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 5 resource group"
