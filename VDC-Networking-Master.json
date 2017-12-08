@@ -434,7 +434,7 @@
             "comments": "Create Spoke1 VNet",
             "name": "spoke1Vnet",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke1RG')]",
+            "resourceGroup": "[parameters('productionRG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -485,7 +485,7 @@
             "comments": "create VNet peering - Spoke2 VNet to Hub VNet",
             "name": "Spoke2-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke2RG')]",
+            "resourceGroup": "[parameters('developmentRG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -504,7 +504,7 @@
             "comments": "create VNet peering - Spoke3 VNet to Hub VNet",
             "name": "Spoke3-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke3RG')]",
+            "resourceGroup": "[parameters('management1RG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -523,7 +523,7 @@
             "comments": "create VNet peering - Spoke4 VNet to Hub VNet",
             "name": "Spoke4-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke4RG')]",
+            "resourceGroup": "[parameters('management2RG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -542,7 +542,7 @@
             "comments": "create VNet peering - Spoke5 VNet to Hub VNet",
             "name": "Spoke5-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke5RG')]",
+            "resourceGroup": "[parameters('gatewayRG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -561,7 +561,7 @@
             "comments": "Create Spoke2 VNet",
             "name": "spoke2Vnet",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke2RG')]",
+            "resourceGroup": "[parameters('developmentRG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -576,7 +576,7 @@
             "comments": "Create Spoke3 VNet",
             "name": "spoke3Vnet",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke3RG')]",
+            "resourceGroup": "[parameters('management1RG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -591,7 +591,7 @@
             "comments": "Create Spoke4 VNet",
             "name": "spoke4Vnet",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke4RG')]",
+            "resourceGroup": "[parameters('management2RG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -606,7 +606,7 @@
             "comments": "Create Spoke5 VNet",
             "name": "spoke5Vnet",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke5RG')]",
+            "resourceGroup": "[parameters('gatewayRG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
