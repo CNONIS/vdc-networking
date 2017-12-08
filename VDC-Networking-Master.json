@@ -48,7 +48,7 @@
             "defaultValue": "VDC-Management2",
             "type": "string",
             "metadata": 
-                "description": "Resource group name for Managemen2"
+                "description": "Resource group name for Management2"
             }
         },
 		"gatewayRG": {
