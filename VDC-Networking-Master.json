@@ -58,7 +58,7 @@
                 "description": "Resource group name for Gateway deployment"
             }
         },
-        "dmz": {
+        "dmzRG": {
             "defaultValue": "VDC-DMZ",
             "type": "string",
             "metadata": {
