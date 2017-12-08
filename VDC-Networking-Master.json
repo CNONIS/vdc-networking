@@ -466,7 +466,7 @@
             "comments": "create VNet peering - Spoke1 VNet to Hub VNet",
             "name": "Spoke1-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('spoke1RG')]",
+            "resourceGroup": "[parameters('productionRG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
