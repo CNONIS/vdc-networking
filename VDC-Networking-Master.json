@@ -550,7 +550,7 @@
                     "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": "[variables('spoke2PeeringTemplate')]"
+                "parameters": "[variables('spoke5PeeringTemplate')]"
             },
             "dependsOn": [
                 "spoke5Vnet",
@@ -584,7 +584,7 @@
                     "uri": "[variables('spokeVnetTemplateURL')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": "[variables('spoke2VnetTemplate')]"
+                "parameters": "[variables('spoke3VnetTemplate')]"
             }
         },
 		{
@@ -599,7 +599,7 @@
                     "uri": "[variables('spokeVnetTemplateURL')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": "[variables('spoke2VnetTemplate')]"
+                "parameters": "[variables('spoke4VnetTemplate')]"
             }
         },
 		{
