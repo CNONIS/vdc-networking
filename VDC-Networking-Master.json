@@ -638,7 +638,7 @@
         {
             "comments": "Create VPN gateway in OnPrem_VNet1.",
             "name": "OnPrem_GW1",
-            "resourceGroup": "[parameters('onPremRG')]",
+            "resourceGroup": "[parameters('gatewayRG')]",
             "condition": "[equals(parameters('createVPNGateway'), 'yes')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
