@@ -431,7 +431,7 @@
             }
         },
         {
-            "comments": "Create Spoke1 VNet",
+            "comments": "Create Production VNet",
             "name": "spoke1Vnet",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('productionRG')]",
