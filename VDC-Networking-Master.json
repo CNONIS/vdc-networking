@@ -36,14 +36,14 @@
             "metadata": {
                 "description": "Resource group name for Development"
             }
-			},
+		},
         "managment1RG": {
             "defaultValue": "VDC-Management1",
             "type": "string",
             "metadata": {
                 "description": "Resource group name for Management1"
             }
-			},
+		},
         "management2RG": {
             "defaultValue": "VDC-Management2",
             "type": "string",
@@ -62,7 +62,7 @@
             "defaultValue": "VDC-DMZ",
             "type": "string",
             "metadata": {
-                "description": "Resource group name for On-Premises"
+                "description": "Resource group name for On-DMZ"
             }
         },
         "nvaRG": {
