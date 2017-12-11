@@ -341,7 +341,7 @@
             }
         },
        
-        },
+        
 		{
             "comments": "Create Gateway VNet",
             "name": "gatewayVnet",
