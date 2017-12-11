@@ -357,7 +357,7 @@
         },
         {
             "comments": "Create Management1 VNet",
-            "name": "managementVnet",
+            "name": "management1Vnet",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('management1RG')]",
             "apiVersion": "2017-05-10",
