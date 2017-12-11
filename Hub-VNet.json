@@ -34,13 +34,13 @@
                     {
                         "name": "[concat(parameters('vnetName'), '-Subnet1')]",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '100.1/24')]"
+                            "addressPrefix": "[concat(parameters('vnetOctets'), '.100.1/24')]"
                         }
                     },
                     {
                         "name": "[concat(parameters('vnetName'), '-Subnet2')]",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '100.2/24')]"
+                            "addressPrefix": "[concat(parameters('vnetOctets'), '.100.2/24')]"
                         }
                     }                
                  
