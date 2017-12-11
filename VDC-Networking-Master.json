@@ -37,15 +37,14 @@
                 "description": "Resource group name for Management1"
             }
 		},
-      
-		"gatewayRG": {
+      	"gatewayRG": {
             "defaultValue": "VDC-Gateway",
             "type": "string",
             "metadata": {
                 "description": "Resource group name for Gateway deployment"
             }
         },
-        "nvaRG": {
+		"nvaRG": {
             "defaultValue": "VDC-NVA",
             "type": "string",
             "metadata": {
