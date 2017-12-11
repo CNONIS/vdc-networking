@@ -6,7 +6,7 @@
             "defaultValue": "Management1_VNet",
             "type": "string",
             "metadata": {
-                "description": "VNet name prefix."
+                "description": "Mangement1 VNet name prefix."
             }
         },
         "vnetOctets": {
