@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "spokeVnetName": {
-            "defaultValue": "Spoke1_VNet",
+            "defaultValue": "Gateway_VNet",
             "type": "string",
             "metadata": {
-                "description": "Name of the spoke VNet"
+                "description": "Name of the Gateway VNet"
             }
         },
         "hubVnetName": {

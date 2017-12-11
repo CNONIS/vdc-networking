@@ -2,41 +2,28 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "spoke1VnetName": {
-            "defaultValue": "Spoke1_Vnet",
+        "gatewayVnetName": {
+            "defaultValue": "Gateway_Vnet",
             "type": "string",
             "metadata": {
-                "description": "Name of the spoke 1 Vnet"
+                "description": "Name of the gateway Vnet"
             }
         },
-        "spoke2VnetName": {
-            "defaultValue": "Spoke2_Vnet",
+        "dmzVnetName": {
+            "defaultValue": "DMZ_Vnet",
             "type": "string",
             "metadata": {
-                "description": "Name of the spoke 2 Vnet"
+                "description": "Name of the dmz Vnet"
             }
 			
         },
-		"spoke3VnetName": {
-            "defaultValue": "Spoke3_Vnet",
+		"management1VnetName": {
+            "defaultValue": "management1_Vnet",
             "type": "string",
             "metadata": {
-                "description": "Name of the spoke 3 Vnet"
+                "description": "Name of the management1 Vnet"
             }
-		},
-		"spoke4VnetName": {
-            "defaultValue": "Spoke4_Vnet",
-            "type": "string",
-            "metadata": {
-                "description": "Name of the spoke 4 Vnet"
-            }
-		},
-		"spoke5VnetName": {
-            "defaultValue": "Spoke5_Vnet",
-            "type": "string",
-            "metadata": {
-                "description": "Name of the spoke 5 Vnet"
-            }
+		
 		},
         "hubVnetName": {
             "defaultValue": "Hub_VNet",
@@ -46,48 +33,34 @@
             }
         },
 		
-        "spoke1RGName": {
-            "defaultValue": "VDC-Production",
+        "gatewayRGName": {
+            "defaultValue": "VDC-Gateway",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 1 resource group"
             }
         },
-		 "spoke2RGName": {
-            "defaultValue": "VDC-Development",
+		 "dmzRGName": {
+            "defaultValue": "VDC-DMZ",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 2 resource group"
             }
         },
-		 "spoke3RGName": {
+		 "managment1RGName": {
             "defaultValue": "VDC-Management1",
             "type": "string",
             "metadata": {
                 "description": "Name of the spoke 3 resource group"
             }
-        },
-		 "spoke4RGName": {
-            "defaultValue": "VDC-Management2",
-            "type": "string",
-            "metadata": {
-                "description": "Name of the spoke 4 resource group"
-            }
-        },
-        "spoke5RGName": {
-            "defaultValue": "Gateway",
-            "type": "string",
-            "metadata": {
-                "description": "Name of the spoke 5 resource group"
-            }
-        }
+         }
     },
     "variables": {},
     "resources": [
         {
             "apiVersion": "2016-06-01",
             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('spoke1VnetName'))]",
+            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('gatewayVnetName'))]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "allowVirtualNetworkAccess": true,
@@ -95,14 +68,14 @@
                 "allowGatewayTransit": true,
                 "useRemoteGateways": false,
                 "remoteVirtualNetwork": {
-                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('spoke1VnetName'))]"
+                    "id": "[resourceId(parameters('gatewayRGName'), 'Microsoft.Network/virtualNetworks', parameters('gatewayVnetName'))]"
                 }
             }
         },
 		{
             "apiVersion": "2016-06-01",
             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('spoke2VnetName'))]",
+            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('dmzVnetName'))]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "allowVirtualNetworkAccess": true,
@@ -110,14 +83,14 @@
                 "allowGatewayTransit": true,
                 "useRemoteGateways": false,
                 "remoteVirtualNetwork": {
-                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('spoke2VnetName'))]"
+                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('dmzVnetName'))]"
                 }
             }
         },
 		{
             "apiVersion": "2016-06-01",
             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('spoke3VnetName'))]",
+            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('managment1VnetName'))]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "allowVirtualNetworkAccess": true,
@@ -125,38 +98,11 @@
                 "allowGatewayTransit": true,
                 "useRemoteGateways": false,
                 "remoteVirtualNetwork": {
-                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('spoke3VnetName'))]"
+                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('management1VnetName'))]"
                 }
             }
         },
-		{
-            "apiVersion": "2016-06-01",
-            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('spoke4VnetName'))]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "allowVirtualNetworkAccess": true,
-                "allowForwardedTraffic": false,
-                "allowGatewayTransit": true,
-                "useRemoteGateways": false,
-                "remoteVirtualNetwork": {
-                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('spoke4VnetName'))]"
-                }
-            }
-        },
-        {
-            "apiVersion": "2016-06-01",
-            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "name": "[concat(parameters('hubVnetName'), '/to-', parameters('spoke5VnetName'))]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "allowVirtualNetworkAccess": true,
-                "allowForwardedTraffic": false,
-                "allowGatewayTransit": true,
-                "useRemoteGateways": false,
-                "remoteVirtualNetwork": {
-                    "id": "[resourceId(parameters('spoke2RGName'), 'Microsoft.Network/virtualNetworks', parameters('spoke5VnetName'))]"
-                }
+		
             }
         }
     ]

@@ -435,16 +435,16 @@
                     "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": "[variables('dmzPeeringTemplate')]"
+                "parameters": "[variables('spoke2PeeringTemplate')]"
             },
             "dependsOn": [
-                "dmzVnet",
+                "spoke2Vnet",
                 "hubVnet"
             ]
         },
 		{
-            "comments": "create VNet peering - management1 VNet to Hub VNet",
-            "name": "Management1-Hub-Peering",
+            "comments": "create VNet peering - Spoke3 VNet to Hub VNet",
+            "name": "Spoke3-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('managment1RG')]",
             "apiVersion": "2017-05-10",
@@ -454,19 +454,69 @@
                     "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": "[variables('management1PeeringTemplate')]"
+                "parameters": "[variables('spoke3PeeringTemplate')]"
             },
             "dependsOn": [
-                "management1Vnet",
+                "spoke3Vnet",
                 "hubVnet"
             ]
         },
+		},
+            "dependsOn": [
+                "spoke4Vnet",
+                "hubVnet"
+            ]
+        },
+		        },
+        {
+            "comments": "Create Spoke2 VNet",
+            "name": "spoke2Vnet",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('developmentRG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('spokeVnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('spoke2VnetTemplate')]"
+            }
+        },
+		{
+            "comments": "Create Spoke3 VNet",
+            "name": "spoke3Vnet",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('managment1RG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('spokeVnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('spoke3VnetTemplate')]"
+            }
+        },
 		
-		        
-        
+        },
+		{
+            "comments": "Create Spoke5 VNet",
+            "name": "spoke5Vnet",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('gatewayRG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('spokeVnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('spoke5VnetTemplate')]"
+            }
         },
         {
-            "comments": "Create VPN gateway in Gateway_VNet1.",
+            "comments": "Create VPN gateway in Hub_VNet1.",
             "name": "Hub_GW1",
             "condition": "[equals(parameters('createVPNGateway'), 'yes')]",
             "type": "Microsoft.Resources/deployments",
@@ -482,7 +532,25 @@
             "dependsOn": [
                 "hubVnet"
             ]
-        
+        },
+        {
+            "comments": "Create VPN gateway in OnPrem_VNet1.",
+            "name": "OnPrem_GW1",
+            "resourceGroup": "[parameters('gatewayRG')]",
+            "condition": "[equals(parameters('createVPNGateway'), 'yes')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vpnGwTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('vpnGwTemplateOnPrem')]"
+            },
+            "dependsOn": [
+                "onPremVnet"
+            ]
         
         }
     ]

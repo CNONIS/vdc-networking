@@ -28,7 +28,7 @@
             }
         },
         "RGName": {
-            "defaultValue": "VDC-Hub",
+            "defaultValue": "VDC-Gateway",
             "type": "string",
             "metadata": {
                 "description": "Name of the resource group"
