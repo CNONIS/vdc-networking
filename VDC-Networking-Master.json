@@ -460,9 +460,8 @@
             ]
         },
 		
-		        
+		     
         
-        },
         {
             "comments": "Create VPN gateway in Gateway_VNet1.",
             "name": "Hub_GW1",
