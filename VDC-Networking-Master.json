@@ -30,8 +30,8 @@
                 "description": "Resource group name for DMZ"
             }
         },
-        "managment1RG": {
-            "defaultValue": "VDC-Managment1",
+        "management1RG": {
+            "defaultValue": "VDC-Management1",
             "type": "string",
             "metadata": {
                 "description": "Resource group name for Management1"
@@ -444,7 +444,7 @@
             "comments": "create VNet peering - management1 VNet to Hub VNet",
             "name": "Management1-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('managment1RG')]",
+            "resourceGroup": "[parameters('management1RG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
