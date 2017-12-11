@@ -457,10 +457,6 @@
                 "management1Vnet",
                 "hubVnet"
             ]
-        },   
-       
-        
-        
-        },
+        },     
     ]
 }
