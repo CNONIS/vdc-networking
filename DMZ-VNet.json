@@ -43,7 +43,7 @@
                             "addressPrefix": "[concat(parameters('vnetOctets'), '.0.2/24')]"
                         }                                    
                    }
-			   ]
+			    ]
 			}
 		}
 	]       

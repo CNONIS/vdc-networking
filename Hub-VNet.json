@@ -42,9 +42,8 @@
                         "properties": {
                             "addressPrefix": "[concat(parameters('vnetOctets'), '.2/24')]"
                         }
-                    },
-                    
-                    }
+                    }                
+                 
                 ]
             }
         }
