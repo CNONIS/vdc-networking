@@ -3,23 +3,23 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vnetName": {
-            "defaultValue": "Spoke_VNet",
+            "defaultValue": "Management1_VNet",
             "type": "string",
             "metadata": {
-                "description": "Spoke VNet name prefix."
+                "description": "VNet name prefix."
             }
         },
         "vnetOctets": {
-            "defaultValue": "10.99",
+            "defaultValue": "10.99.203",
             "type": "string",
             "metadata": {
-                "description": "First two octets of the spoke vnet IP space."
+                "description": "First three octets of the VNet IP space."
             }
         }
     },
     "resources": [
         {
-            "comments": "Spoke VNet with 5 subnets",
+            "comments": "VNet with 2 subnets ",
             "name": "[concat(parameters('vnetName'))]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2017-06-01",
@@ -27,41 +27,23 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[concat(parameters('vnetOctets'), '.0.0/16')]"
+                        "[concat(parameters('vnetOctets'), '0.0/24')]"
                     ]
                 },
                 "subnets": [
                     {
                         "name": "[concat(parameters('vnetName'), '-Subnet1')]",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '.200.0/24')]"
+                            "addressPrefix": "[concat(parameters('vnetOctets'), '.1/24')]"
                         }
                     },
                     {
                         "name": "[concat(parameters('vnetName'), '-Subnet2')]",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '.201.0/24')]"
+                            "addressPrefix": "[concat(parameters('vnetOctets'), '.1/24')]"
                         }
-						},
+                    },
                     
-					{
-                        "name": "[concat(parameters('vnetName'), '-Subnet3')]",
-                        "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '.202.0/24')]"
-                        }
-					 },
-					 {
-                        "name": "[concat(parameters('vnetName'), '-Subnet4')]",
-                        "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '.203.0/24')]"
-                        }
-						},
-					 {
-                        "name": "[concat(parameters('vnetName'), '-Subnet5')]",
-                        "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '.204.0/24')]"
-                        }
-						},
                     }
                 ]
             }
