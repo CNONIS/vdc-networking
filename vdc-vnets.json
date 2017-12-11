@@ -66,26 +66,26 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.101.0.0/16"
+                        "10.99.100.0/16"
                     ]
                 },
                 "subnets": [
                     {
                         "name": "Hub_VNet-Subnet1",
                         "properties": {
-                            "addressPrefix": "10.101.1.0/24"
+                            "addressPrefix": "10.99.100.1/24"
                         }
                     },
                     {
                         "name": "Hub_VNet-Subnet2",
                         "properties": {
-                            "addressPrefix": "10.101.2.0/24"
+                            "addressPrefix": "10.99.101.2/24"
                         }
                     },
                     {
                         "name": "GatewaySubnet",
                         "properties": {
-                            "addressPrefix": "10.101.3.0/24"
+                            "addressPrefix": "10.99.0.0/24"
                         }
                     }
                 ]
@@ -119,7 +119,7 @@
                     {
                         "name": "GatewaySubnet",
                         "properties": {
-                            "addressPrefix": "10.102.3.0/24"
+                            "addressPrefix": "10.99.2.0/24"
                         }
                     }
                 ]
