@@ -2,14 +2,21 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "spokeVnetName": {
+        "gatewayVnetName": {
             "defaultValue": "Gateway_VNet",
             "type": "string",
             "metadata": {
                 "description": "Name of the Gateway VNet"
             }
         },
-        "hubVnetName": {
+        "management1VnetName": {
+            "defaultValue": "Management1_VNet",
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Management1 hub VNet"
+            }
+        },
+		"hubVnetName": {
             "defaultValue": "Hub_VNet",
             "type": "string",
             "metadata": {
