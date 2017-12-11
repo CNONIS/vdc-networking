@@ -398,7 +398,7 @@
                 }
             },
             "dependsOn": [
-                "spoke1Vnet",
+                "gatewayVnet",
                 "hubVnet"
             ]
         },
