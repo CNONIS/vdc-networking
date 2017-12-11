@@ -341,8 +341,7 @@
             }
         },
        
-        
-		{
+        {
             "comments": "Create Gateway VNet",
             "name": "gatewayVnet",
             "type": "Microsoft.Resources/deployments",
