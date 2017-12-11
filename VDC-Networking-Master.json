@@ -458,23 +458,7 @@
                 "hubVnet"
             ]
         },   
-        {
-            "comments": "Create VPN gateway in Gateway_VNet1.",
-            "name": "Hub_GW1",
-            "condition": "[equals(parameters('createVPNGateway'), 'yes')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('vpnGwTemplateURL')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": "[variables('vpnGwTemplateHub')]"
-            },
-            "dependsOn": [
-                "hubVnet"
-            ]
+       
         
         
         },
