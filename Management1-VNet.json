@@ -10,7 +10,7 @@
             }
         },
         "vnetOctets": {
-            "defaultValue": "10.99",
+            "defaultValue": "10.99.202",
             "type": "string",
             "metadata": {
                 "description": "First three octets of the VNet IP space."
