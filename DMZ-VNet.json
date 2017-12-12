@@ -40,7 +40,7 @@
                     {
                         "name": "[concat(parameters('vnetName'), '-Subnet2')]",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('vnetOctets'), '.1.0/24')]"
+                            "addressPrefix": "[concat(parameters('vnetOctets'), '.2.0/24')]"
                         }                                    
                    }
 			    ]
