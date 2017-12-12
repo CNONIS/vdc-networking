@@ -27,7 +27,7 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[concat(parameters('vnetOctets'), '.0.0/16')]"
+                        "[concat(parameters('vnetOctets'), '.0.0/24')]"
                     ]
                 },
                 "subnets": [
