@@ -10,7 +10,7 @@
             }
         },
         "spokeVnetOctet1": {
-            "defaultValue": "10.",
+            "defaultValue": "10.99",
             "type": "string",
             "metadata": {
                 "description": "First octet of the spoke vnet IP space. Second octet depends on the VNet instance (1, 2, 3, etc)."
