@@ -83,7 +83,7 @@
                 "allowGatewayTransit": true,
                 "useRemoteGateways": false,
                 "remoteVirtualNetwork": {
-                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('dmzVnetName'))]"
+                    "id": "[resourceId(parameters('gatewayRGName'), 'Microsoft.Network/virtualNetworks', parameters('dmzVnetName'))]"
                 }
             }
         },
@@ -98,7 +98,7 @@
                 "allowGatewayTransit": true,
                 "useRemoteGateways": false,
                 "remoteVirtualNetwork": {
-                    "id": "[resourceId(parameters('spoke1RGName'), 'Microsoft.Network/virtualNetworks', parameters('management1VnetName'))]"
+                    "id": "[resourceId(parameters('gatewayRGName'), 'Microsoft.Network/virtualNetworks', parameters('management1VnetName'))]"
                 }
             }
         },
