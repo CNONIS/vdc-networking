@@ -10,7 +10,7 @@
             }
         },
         "vnetOctets": {
-            "defaultValue": "10.99.1",
+            "defaultValue": "10.99",
             "type": "string",
             "metadata": {
                 "description": "First three octets of the VNet IP space."
@@ -27,7 +27,7 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[concat(parameters('vnetOctets'), '.0.0/24')]"
+                        "[concat(parameters('vnetOctets'), '.0.0/16')]"
                     ]
                 },
                 "subnets": [
