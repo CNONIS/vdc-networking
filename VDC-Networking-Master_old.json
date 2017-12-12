@@ -30,22 +30,21 @@
                 "description": "Resource group name for DMZ"
             }
         },
-        "managment1RG": {
+        "management1RG": {
             "defaultValue": "VDC-Management1",
             "type": "string",
             "metadata": {
                 "description": "Resource group name for Management1"
             }
 		},
-      
-		"gatewayRG": {
+      	"gatewayRG": {
             "defaultValue": "VDC-Gateway",
             "type": "string",
             "metadata": {
                 "description": "Resource group name for Gateway deployment"
             }
         },
-        "nvaRG": {
+		"nvaRG": {
             "defaultValue": "VDC-NVA",
             "type": "string",
             "metadata": {
@@ -82,7 +81,7 @@
                 "value": "Hub_VNet"
             },
             "vnetOctets": {
-                "value": "10.99.100"
+                "value": "10.99"
             }
         },
 		  "gatewayVnetTemplate": {
@@ -90,7 +89,7 @@
                 "value": "Gateway_VNet"
             },
             "vnetOctets": {
-                "value": "10.99.0"
+                "value": "10.99"
             }
         },
 		     "dmzVnetTemplate": {
@@ -98,7 +97,7 @@
                 "value": "DMZ_VNet"
             },
             "vnetOctets": {
-                "value": "10.99.1"
+                "value": "10.99"
             }
        
       
@@ -108,7 +107,7 @@
                 "value": "Management1_VNet"
             },
             "vnetOctets": {
-                "value": "10.99.202"
+                "value": "10.99"
             }		
         
 		},
@@ -340,9 +339,7 @@
                 "parameters": "[variables('hubVnetTemplate')]"
             }
         },
-       
-        },
-		{
+        {
             "comments": "Create Gateway VNet",
             "name": "gatewayVnet",
             "type": "Microsoft.Resources/deployments",
@@ -353,13 +350,13 @@
                 "templateLink": {
                     "uri": "[variables('gatewayVnetTemplateURL')]",
                     "contentVersion": "1.0.0.0"
-                },
+			    },
                 "parameters": "[variables('gatewayVnetTemplate')]"
             }
         },
         {
             "comments": "Create Management1 VNet",
-            "name": "managementVnet",
+            "name": "management1Vnet",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('management1RG')]",
             "apiVersion": "2017-05-10",
@@ -400,7 +397,7 @@
                 }
             },
             "dependsOn": [
-                "spoke1Vnet",
+                "gatewayVnet",
                 "hubVnet"
             ]
         },
@@ -435,18 +432,18 @@
                     "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": "[variables('spoke2PeeringTemplate')]"
+                "parameters": "[variables('dmzPeeringTemplate')]"
             },
             "dependsOn": [
-                "spoke2Vnet",
+                "dmzVnet",
                 "hubVnet"
             ]
         },
 		{
-            "comments": "create VNet peering - Spoke3 VNet to Hub VNet",
-            "name": "Spoke3-Hub-Peering",
+            "comments": "create VNet peering - management1 VNet to Hub VNet",
+            "name": "Management1-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('managment1RG')]",
+            "resourceGroup": "[parameters('management1RG')]",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
@@ -454,69 +451,15 @@
                     "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": "[variables('spoke3PeeringTemplate')]"
+                "parameters": "[variables('management1PeeringTemplate')]"
             },
             "dependsOn": [
-                "spoke3Vnet",
+                "management1Vnet",
                 "hubVnet"
             ]
-        },
-		},
-            "dependsOn": [
-                "spoke4Vnet",
-                "hubVnet"
-            ]
-        },
-		        },
+        },   
         {
-            "comments": "Create Spoke2 VNet",
-            "name": "spoke2Vnet",
-            "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('developmentRG')]",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('spokeVnetTemplateURL')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": "[variables('spoke2VnetTemplate')]"
-            }
-        },
-		{
-            "comments": "Create Spoke3 VNet",
-            "name": "spoke3Vnet",
-            "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('managment1RG')]",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('spokeVnetTemplateURL')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": "[variables('spoke3VnetTemplate')]"
-            }
-        },
-		
-        },
-		{
-            "comments": "Create Spoke5 VNet",
-            "name": "spoke5Vnet",
-            "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('gatewayRG')]",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('spokeVnetTemplateURL')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": "[variables('spoke5VnetTemplate')]"
-            }
-        },
-        {
-            "comments": "Create VPN gateway in Hub_VNet1.",
+            "comments": "Create VPN gateway in Gateway_VNet1.",
             "name": "Hub_GW1",
             "condition": "[equals(parameters('createVPNGateway'), 'yes')]",
             "type": "Microsoft.Resources/deployments",
@@ -532,26 +475,8 @@
             "dependsOn": [
                 "hubVnet"
             ]
-        },
-        {
-            "comments": "Create VPN gateway in OnPrem_VNet1.",
-            "name": "OnPrem_GW1",
-            "resourceGroup": "[parameters('gatewayRG')]",
-            "condition": "[equals(parameters('createVPNGateway'), 'yes')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('vpnGwTemplateURL')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": "[variables('vpnGwTemplateOnPrem')]"
-            },
-            "dependsOn": [
-                "onPremVnet"
-            ]
         
-        }
+        
+        },
     ]
 }
