@@ -81,7 +81,7 @@
                 "value": "Hub_VNet"
             },
             "vnetOctets": {
-                "value": "10.99"
+                "value": "10.99.100"
             }
         },
 		  "gatewayVnetTemplate": {
@@ -89,7 +89,7 @@
                 "value": "Gateway_VNet"
             },
             "vnetOctets": {
-                "value": "10.99"
+                "value": "10.99.0"
             }
         },
 		     "dmzVnetTemplate": {
@@ -97,7 +97,7 @@
                 "value": "DMZ_VNet"
             },
             "vnetOctets": {
-                "value": "10.99"
+                "value": "10.99.1"
             }
        
       
@@ -107,7 +107,7 @@
                 "value": "Management1_VNet"
             },
             "vnetOctets": {
-                "value": "10.99"
+                "value": "10.99.202"
             }		
         
 		},
