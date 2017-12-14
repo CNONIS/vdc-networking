@@ -1,0 +1,339 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "defaultValue": "admin",
+            "type": "string",
+            "metadata": {
+                "description": "Username for VMs"
+            }
+        },
+        "adminPassword": {
+            "defaultValue": "P@ssw0rd",
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for VMs"
+            }
+        },
+        "hubRG": {
+            "defaultValue": "VDC-Hub",
+            "type": "string",
+            "metadata": {
+                "description": "Resource group name for Hub"
+            }
+        },
+        "dmzRG": {
+            "defaultValue": "VDC-DMZ",
+            "type": "string",
+            "metadata": {
+                "description": "Resource group name for DMZ"
+            }
+        },
+        "management1RG": {
+            "defaultValue": "VDC-Management1",
+            "type": "string",
+            "metadata": {
+                "description": "Resource group name for Management1"
+            }
+		},
+      	"gatewayRG": {
+            "defaultValue": "VDC-Gateway",
+            "type": "string",
+            "metadata": {
+                "description": "Resource group name for Gateway deployment"
+            }
+        },
+		"nvaRG": {
+            "defaultValue": "VDC-NVA",
+            "type": "string",
+            "metadata": {
+                "description": "Resource group name for NVA deployment"
+            }
+        },
+        "createVPNGateway": {
+            "defaultValue": "yes",
+            "type": "string",
+            "allowedValues": [
+                "yes",
+                "no"
+            ],
+            "metadata": {
+                "description": "Controls whether VPN gateways will be deployed"
+            }
+        }
+    },
+    "variables": {
+        "baseURL": "https://raw.githubusercontent.com/CNONIS/vdc-networking/master/",
+        "hubVnetTemplateURL": "[concat(variables('baseURL'), 'Hub-VNet.json')]",
+		"dmzVnetTemplateURL": "[concat(variables('baseURL'), 'DMZ-VNet.json')]",
+		"gatewayVnetTemplateURL": "[concat(variables('baseURL'), 'Gateway-VNet.json')]",
+        "spokeVnetTemplateURL": "[concat(variables('baseURL'), 'Spoke-VNet.json')]",
+		"management1VnetTemplateURL": "[concat(variables('baseURL'), 'Management1-VNet.json')]",
+        "vnetPeeringHubTemplateURL": "[concat(variables('baseURL'), 'VNet-Peering-Hub.json')]",
+        "vnetPeeringSpokeTemplateURL": "[concat(variables('baseURL'), 'VNet-Peering-Spoke.json')]",
+        "vpnGwTemplateURL": "[concat(variables('baseURL'), 'vpn-gw.json')]",
+        "singleVMTemplateURL": "[concat(variables('baseURL'), 'Single-VM.json')]",
+        "multiVMTemplateURL": "[concat(variables('baseURL'), 'MultiVM-LoadBalanced.json')]",
+        "nvaTemplateURL": "[concat(variables('baseURL'), 'Deploy-NVAs.json')]",
+        "hubVnetTemplate": {
+            "vnetName": {
+                "value": "Hub_VNet"
+            },
+            "vnetOctets": {
+                "value": "10.99"
+            }
+        },
+		  "gatewayVnetTemplate": {
+            "vnetName": {
+                "value": "Gateway_VNet"
+            },
+            "vnetOctets": {
+                "value": "10.99"
+            }
+        },
+		     "dmzVnetTemplate": {
+            "vnetName": {
+                "value": "DMZ_VNet"
+            },
+            "vnetOctets": {
+                "value": "10.99"
+            }
+       
+      
+		},
+        "management1VnetTemplate": {
+            "vnetName": {
+                "value": "Management1_VNet"
+            },
+            "vnetOctets": {
+                "value": "10.99"
+            }		
+        
+		},
+        "management1PeeringTemplate": {
+            "spokeVnetName": {
+                "value": "Management1_VNet"
+            }
+			},
+        "dmzPeeringTemplate": {
+            "spokeVnetName": {
+                "value": "DMZ_VNet"
+            }
+        },
+		"gatewayPeeringTemplate": {
+            "spokeVnetName": {
+                "value": "Gateway_VNet"
+            }
+        },
+        "vpnGwTemplateHub": {
+            "vnetName": {
+                "value": "Gateway_VNet"
+            },
+            "gwName": {
+                "value": "Gateway_GW1"
+            },
+            "PIPName": {
+                "value": "Gateway_VNet-gwPip"
+            },
+            "asNumber": {
+                "value": "65514"
+            }
+        
+        },
+        "vmTemplateDC": {
+            "vmName": {
+                "value": "DC-VM"
+            },
+            "lbPIPName": {
+                "value": "DC-LB-PIP"
+            },
+            "lbName": {
+                "value": "DC-LB"
+            },
+            "vnetName": {
+                "value": "Management1_VNet"
+            },
+            "subnetName": {
+                "value": "Management1_VNet-Subnet1"
+            },
+            "vmType": {
+                "value": "windowsserver"
+            },
+            "adminUsername": {
+                "value": "[parameters('adminUsername')]"
+            },
+            "adminPassword": {
+                "value": "[parameters('adminPassword')]"
+            },
+            "availabilitySetName": {
+                "value": "Spoke1-AvailabilitySet"
+            }
+        },
+        "vmTemplate": {
+            "vmName": {
+                "value": "DCConnect-VM"
+            },
+            "lbPIPName": {
+                "value": "Management1-LB-PIP"
+            },
+            "lbName": {
+                "value": "Management1-LB"
+            },
+            "vnetName": {
+                "value": "Management1_VNet"
+            },
+            "subnetName": {
+                "value": "Management_VNet-Subnet1"
+            },
+            "vmType": {
+                "value": "windowsserver"
+            },
+            "adminUsername": {
+                "value": "[parameters('adminUsername')]"
+            },
+            "adminPassword": {
+                "value": "[parameters('adminPassword')]"
+            },
+            "availabilitySetName": {
+                "value": "Spoke2-AvailabilitySet"
+            }    
+            },
+    "resources": [
+        {
+            "comments": "Create Hub VNet",
+            "name": "hubVnet",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('hubVnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('hubVnetTemplate')]"
+            }
+        },
+        {
+            "comments": "Create Gateway VNet",
+            "name": "gatewayVnet",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('gatewayRG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('gatewayVnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+			    },
+                "parameters": "[variables('gatewayVnetTemplate')]"
+            }
+        },
+        {
+            "comments": "Create Management1 VNet",
+            "name": "management1Vnet",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('management1RG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('management1VnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('management1VnetTemplate')]"
+            }
+        },
+		{
+            "comments": "Create DMZ VNet",
+            "name": "dmzVnet",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('dmzRG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('dmzVnetTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('dmzVnetTemplate')]"
+            }
+        },
+        {
+            "comments": "create VNet peering - Hub_VNet to Spoke VNets",
+            "name": "Hub-Spoke-Peering",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetPeeringHubTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                }
+            },
+            "dependsOn": [
+                "gatewayVnet",
+                "hubVnet"
+            ]
+        },
+        {
+            "comments": "create VNet peering - gateway VNet to Hub VNet",
+            "name": "Gateway-Hub-Peering",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('gatewayRG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('gatwayPeeringTemplate')]"
+            },
+            "dependsOn": [
+                "gatewayVnet",
+                "hubVnet"
+            ]
+        },
+        {
+            "comments": "create VNet peering - DMZ VNet to Hub VNet",
+            "name": "DMZ-Hub-Peering",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('dmzRG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('dmzPeeringTemplate')]"
+            },
+            "dependsOn": [
+                "dmzVnet",
+                "hubVnet"
+            ]
+        },
+		{
+            "comments": "create VNet peering - management1 VNet to Hub VNet",
+            "name": "Management1-Hub-Peering",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('management1RG')]",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetPeeringSpokeTemplateURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": "[variables('management1PeeringTemplate')]"
+            },
+            "dependsOn": [
+                "management1Vnet",
+                "hubVnet"
+            ]
+        }       
+        
+        
+    ]
+}
