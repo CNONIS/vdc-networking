@@ -332,9 +332,6 @@
                 "management1Vnet",
                 "hubVnet"
             ]
-        }       
-        
-        
+        }           
     ]
-  },
-}
+  }
