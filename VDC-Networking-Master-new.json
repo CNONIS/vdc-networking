@@ -314,7 +314,7 @@
                 "hubVnet"
             ]
         },
-		
+		{
             "comments": "create VNet peering - management1 VNet to Hub VNet",
             "name": "Management1-Hub-Peering",
             "type": "Microsoft.Resources/deployments",
