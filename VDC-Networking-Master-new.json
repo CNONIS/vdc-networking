@@ -98,19 +98,16 @@
             },
             "vnetOctets": {
                 "value": "10.99"
-            }
-       
-      
-		},
+            }     
+       },
         "management1VnetTemplate": {
             "vnetName": {
                 "value": "Management1_VNet"
             },
             "vnetOctets": {
                 "value": "10.99"
-            }		
-        
-		},
+            }	
+        },
         "management1PeeringTemplate": {
             "spokeVnetName": {
                 "value": "Management1_VNet"
@@ -197,8 +194,9 @@
             },
             "availabilitySetName": {
                 "value": "Spoke2-AvailabilitySet"
-            }    
-            },
+            }   
+        }  			
+    },
     "resources": [
         {
             "comments": "Create Hub VNet",
